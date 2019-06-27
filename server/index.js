@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const gitReq = require('../helpers/github.js')
+const showRepos = require('../database/index.js');
+
 let app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -20,6 +22,9 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  showRepos.get((data) => {
+    res.send(data)
+  });
 });
 
 let port = 1128;

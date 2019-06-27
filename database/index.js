@@ -29,9 +29,22 @@ let save = (data) => {
   repo.save((err, success) => {
     if (err) {
       return console.error(err)
+    } else {
+      console.log('success')
     }
-  })
+  });
 
 }
 
+const get = (cb) => {
+  Repo.find({}, (err, arr)=> {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(arr);
+    }
+  })
+}
+
 module.exports.save = save;
+module.exports.get = get;

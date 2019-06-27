@@ -11,6 +11,35 @@ class App extends React.Component {
       repos: []
     }
 
+    this.getRepos = this.getRepos.bind(this);
+
+  }
+
+  componentDidMount() {
+    this.getRepos()
+  }
+
+  getRepos () {
+    $.ajax({
+      url: '/repos',
+      method: 'GET',
+      success: (data) => {
+        var reposByUser = data.map( (repo, index) => {
+          return repo.repos
+        });
+        // console.log(reposByUser);
+        var allRepos = [];
+        for (var i = 0; i < reposByUser.length; i++) {
+          for (var j = 0; j < reposByUser[i].length; j++) {
+            allRepos.push(reposByUser[i][j].name);
+          }
+        }
+        this.setState({repos: allRepos});
+      },
+      error: () => {
+        console.log('i brokey the servey')
+      }
+    });
   }
 
   search (term) {
