@@ -1,9 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const gitReq = require('../helpers/github.js')
 let app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.post('/repos', function (req, res) {
+  // console.log(req.body.term);
+  gitReq.getReposByUsername(req.body.term);
   res.sendStatus(200);
   // TODO - your code here!
   // This route should take the github username provided
