@@ -13,12 +13,25 @@ let save = (data) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  data.items.map( item => {
-    let repo = new Repo({
-      owner: item.login,
-    })
-    })
-  var  = new Repo({owner: data.})
+  const repos = data.map( item => {
+    return {
+      name: item.name,
+      url: item.html_url,
+      forks: item.forks
+    }
+  });
+
+  let repo = new Repo({
+    owner: data[0].owner.login,
+    repos: repos
+  });
+
+  repo.save((err, success) => {
+    if (err) {
+      return console.error(err)
+    }
+  })
+
 }
 
 module.exports.save = save;
