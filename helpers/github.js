@@ -20,8 +20,7 @@ let getReposByUsername = (username) => {
   callback = (err, res, body)=> {
     if (!err && res.statusCode === 200) {
       const info = JSON.parse(body);
-      // console.log(info.name);
-      database.save(info);
+      database.save(info)
     }
   }
 
