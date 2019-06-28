@@ -24,15 +24,19 @@ class App extends React.Component {
       url: '/repos',
       method: 'GET',
       success: (data) => {
-        var reposByUser = data.map( (repo, index) => {
-          return repo.repos
-        });
-        var allRepos = [];
-        for (var i = 0; i < reposByUser.length; i++) {
-          for (var j = 0; j < reposByUser[i].length; j++) {
-            allRepos.push(reposByUser[i][j]);
-          }
-        }
+        // var reposByUser = data.map( (repo, index) => {
+        //   return repo.repos
+        // });
+        // var allRepos = [];
+        // for (var i = 0; i < reposByUser.length; i++) {
+        //   for (var j = 0; j < reposByUser[i].length; j++) {
+        //     allRepos.push(reposByUser[i][j]);
+        //   }
+        // }
+        console.log(data)
+        var allRepos = data.map( (repo) => {
+          return repo
+        })
         this.setState({repos: allRepos});
       },
       error: () => {
@@ -47,7 +51,7 @@ class App extends React.Component {
       url: '/repos',
       method: 'POST',
       data: {term: term},
-      success: () => { console.log('i sendy the posty') },
+      success: () => {  },
       error: () => { console.log('oh no, i no sendy')}
     });
   }
