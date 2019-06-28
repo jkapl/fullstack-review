@@ -13,27 +13,43 @@ let save = (data) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  const repos = data.map( item => {
-    return {
-      name: item.name,
-      url: item.html_url,
-      forks: item.forks
-    }
-  });
 
-  let repo = new Repo({
-    owner: data[0].owner.login,
-    repos: repos
-  });
-
-  repo.save((err, success) => {
+  Repo.distinct('owner', null, (err, owners) => {
     if (err) {
-      return console.error(err)
+      console.log('database error')
     } else {
-      console.log('success')
-    }
-  });
+      console.log(owners)
+      console.log(data[0].owner.login);
+      for (var i = 0; i < owners.length; i++) {
+        if (data[0].owner.login === owners[i]) {
+          console.log('already in DB!!!!')
+          return
+        }
+      }
 
+    const repos = data.map( item => {
+      return {
+        name: item.name,
+        url: item.html_url,
+        forks: item.forks
+      }
+    });
+
+    let repo = new Repo({
+      owner: data[0].owner.login,
+      repos: repos
+    });
+
+    repo.save((err, success) => {
+      if (err) {
+        return console.error(err)
+      } else {
+        console.log('success')
+      }
+    });
+
+    }
+  })
 }
 
 const get = (cb) => {

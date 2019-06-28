@@ -27,11 +27,10 @@ class App extends React.Component {
         var reposByUser = data.map( (repo, index) => {
           return repo.repos
         });
-        // console.log(reposByUser);
         var allRepos = [];
         for (var i = 0; i < reposByUser.length; i++) {
           for (var j = 0; j < reposByUser[i].length; j++) {
-            allRepos.push(reposByUser[i][j].name);
+            allRepos.push(reposByUser[i][j]);
           }
         }
         this.setState({repos: allRepos});
@@ -51,7 +50,6 @@ class App extends React.Component {
       success: () => { console.log('i sendy the posty') },
       error: () => { console.log('oh no, i no sendy')}
     });
-    // TODO
   }
 
   render () {
