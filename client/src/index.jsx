@@ -26,7 +26,7 @@ class App extends React.Component {
       success: (data) => {
         var allRepos = data.map( (repo) => {
           return repo
-        })
+        });
         this.setState({repos: allRepos});
       },
       error: () => {
@@ -42,18 +42,11 @@ class App extends React.Component {
       method: 'POST',
       data: {term: term},
       success: () => {
-        $.ajax({
-          url: '/repos',
-          method: 'GET',
-          success: (data) => {
-            var allRepos = data.map( repo => {
-              return repo
-            });
-            this.setState({repos: allRepos});
-          }
-        })
+        this.getRepos();
        },
-      error: () => { console.log('oh no, i no sendy')}
+      error: () => {
+        console.log('oh no, i no sendy');
+      }
     });
   }
 
