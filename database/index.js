@@ -11,7 +11,7 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (data) => {
+let save = (data, res) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
@@ -22,26 +22,36 @@ let save = (data) => {
       for (var i = 0; i < owners.length; i++) {
         if (data[0].owner.login === owners[i]) {
           console.log('already in DB!!!!')
+          res.sendStatus(200);
           return
         }
       }
-
+    let repos = [];
     for (var i = 0; i < data.length; i++) {
-      let repo = new Repo({
+      let repo = {
         owner: data[i].owner.login,
         repoName: data[i].name,
         url: data[i].html_url,
         forks: data[i].forks_count
-      });
-
-      repo.save((err, success) => {
-        if (err) {
-          return console.error(err)
-        } else {
-          console.log('success')
-        }
-      });
+      };
+      repos.push(repo);
     }
+
+      // repo.save((err, success) => {
+      //   if (err) {
+      //     return console.error(err)
+      //   } else {
+      //     console.log('success')
+      //   }
+      // });
+      Repo.insertMany(repos, (err) => {
+        if (err) {
+          console.log(err);
+          res.sendStatus(500)
+         } else {
+        res.sendStatus(200);
+          }
+        });
     }
   })
 }

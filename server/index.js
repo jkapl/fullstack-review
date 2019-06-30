@@ -10,8 +10,10 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.post('/repos', function (req, res) {
-  gitReq.getReposByUsername(req.body.term);
-  res.sendStatus(200);
+  let { term } = req.body;
+
+  gitReq.getReposByUsername(term, res);
+  //res.sendStatus(200);
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
